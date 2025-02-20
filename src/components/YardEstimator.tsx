@@ -17,45 +17,35 @@ const YardEstimator: React.FC = () => {
   const [address, setAddress] = useState('');
   const [loading, setLoading] = useState(false);
   const [showInstructions, setShowInstructions] = useState(true);
-  const [mapboxToken, setMapboxToken] = useState('');
-  const [isMapInitialized, setIsMapInitialized] = useState(false);
-
-  const initializeMap = () => {
-    if (!mapContainer.current || !mapboxToken) return;
-
-    try {
-      mapboxgl.accessToken = mapboxToken;
-      
-      map.current = new mapboxgl.Map({
-        container: mapContainer.current,
-        style: 'mapbox://styles/mapbox/satellite-streets-v12',
-        center: [-98.5795, 39.8283], // USA center
-        zoom: 3
-      });
-
-      draw.current = new MapboxDraw({
-        displayControlsDefault: false,
-        controls: {
-          polygon: true,
-          trash: true
-        },
-        defaultMode: 'draw_polygon'
-      });
-
-      map.current.addControl(draw.current);
-
-      map.current.on('draw.create', updateArea);
-      map.current.on('draw.delete', updateArea);
-      map.current.on('draw.update', updateArea);
-
-      setIsMapInitialized(true);
-    } catch (error) {
-      console.error('Error initializing map:', error);
-      setIsMapInitialized(false);
-    }
-  };
 
   useEffect(() => {
+    if (!mapContainer.current) return;
+
+    // Replace 'YOUR_MAPBOX_TOKEN' with your actual Mapbox public token
+    mapboxgl.accessToken = 'YOUR_MAPBOX_TOKEN';
+    
+    map.current = new mapboxgl.Map({
+      container: mapContainer.current,
+      style: 'mapbox://styles/mapbox/satellite-streets-v12',
+      center: [-98.5795, 39.8283], // USA center
+      zoom: 3
+    });
+
+    draw.current = new MapboxDraw({
+      displayControlsDefault: false,
+      controls: {
+        polygon: true,
+        trash: true
+      },
+      defaultMode: 'draw_polygon'
+    });
+
+    map.current.addControl(draw.current);
+
+    map.current.on('draw.create', updateArea);
+    map.current.on('draw.delete', updateArea);
+    map.current.on('draw.update', updateArea);
+
     return () => {
       map.current?.remove();
     };
@@ -73,14 +63,14 @@ const YardEstimator: React.FC = () => {
   };
 
   const handleAddressSearch = async () => {
-    if (!address || !mapboxToken) return;
+    if (!address) return;
     setLoading(true);
 
     try {
       const response = await fetch(
         `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(
           address
-        )}.json?access_token=${mapboxToken}&limit=1`
+        )}.json?access_token=${mapboxgl.accessToken}&limit=1`
       );
       const data = await response.json();
 
@@ -103,43 +93,6 @@ const YardEstimator: React.FC = () => {
     draw.current?.deleteAll();
     setArea(null);
   };
-
-  if (!isMapInitialized) {
-    return (
-      <div className="flex items-center justify-center min-h-screen bg-background p-4">
-        <div className="bg-white/90 backdrop-blur-md p-6 rounded-lg shadow-lg max-w-md w-full space-y-4">
-          <h2 className="text-xl font-semibold text-forest-700">Welcome to Yard Estimator</h2>
-          <p className="text-sm text-gray-600">To get started, please enter your Mapbox public token:</p>
-          <div className="space-y-4">
-            <Input
-              type="text"
-              placeholder="Enter your Mapbox token..."
-              value={mapboxToken}
-              onChange={(e) => setMapboxToken(e.target.value)}
-              className="w-full"
-            />
-            <Button 
-              onClick={initializeMap}
-              className="w-full bg-forest-600 hover:bg-forest-700 text-white"
-            >
-              Initialize Map
-            </Button>
-            <p className="text-xs text-gray-500">
-              Don't have a token? Get one for free at{" "}
-              <a 
-                href="https://www.mapbox.com/studio/account/tokens/" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="text-forest-600 hover:text-forest-700 underline"
-              >
-                Mapbox
-              </a>
-            </p>
-          </div>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="relative w-full h-screen bg-background">
