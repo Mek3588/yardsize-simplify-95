@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef, useState } from 'react';
 import mapboxgl from 'mapbox-gl';
 import MapboxDraw from '@mapbox/mapbox-gl-draw';
@@ -21,8 +20,7 @@ const YardEstimator: React.FC = () => {
   useEffect(() => {
     if (!mapContainer.current) return;
 
-    // Replace 'YOUR_MAPBOX_TOKEN' with your actual Mapbox public token
-    mapboxgl.accessToken = 'YOUR_MAPBOX_TOKEN';
+    mapboxgl.accessToken = 'pk.eyJ1Ijoiam9zZWF0dyIsImEiOiJjbTdjbHM1cWwwc2ttMm5vbXJqemRlc2V1In0.UlFjTgFW2a4HeEZLe8MG3w';
     
     map.current = new mapboxgl.Map({
       container: mapContainer.current,
