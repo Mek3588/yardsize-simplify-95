@@ -216,7 +216,7 @@ const YardEstimator: React.FC = () => {
   };
 
   return (
-    <div className="relative w-full h-screen bg-background touch-manipulation font-jakarta">
+    <div className="relative w-full h-screen bg-background touch-manipulation">
       <div ref={mapContainer} className="absolute inset-0" />
       
       {/* Search Panel */}
@@ -283,23 +283,23 @@ const YardEstimator: React.FC = () => {
               <X className="h-4 w-4" />
             </button>
             <div className="space-y-2">
-              <h3 className="font-archivo font-semibold text-brand-primary text-sm md:text-base">How to use:</h3>
-              <ol className="text-xs md:text-sm space-y-1.5 text-gray-600 font-jakarta">
+              <h3 className="font-archivo text-brand-primary font-semibold text-sm md:text-base">How to use:</h3>
+              <ol className="text-xs md:text-sm space-y-1.5 text-gray-600">
                 <li className="flex items-start gap-2">
                   <span className="font-archivo font-semibold text-brand-primary">1.</span>
-                  <span>Enter your address to find your property</span>
+                  <span className="font-jakarta">Enter your address to find your property</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="font-archivo font-semibold text-brand-primary">2.</span>
-                  <span>Click the polygon tool to start drawing</span>
+                  <span className="font-jakarta">Click the polygon tool to start drawing</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="font-archivo font-semibold text-brand-primary">3.</span>
-                  <span>Click points around your yard to outline the area</span>
+                  <span className="font-jakarta">Click points around your yard to outline the area</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="font-archivo font-semibold text-brand-primary">4.</span>
-                  <span>Click the first point to complete the shape</span>
+                  <span className="font-jakarta">Click the first point to complete the shape</span>
                 </li>
               </ol>
             </div>
