@@ -230,14 +230,14 @@ const YardEstimator: React.FC = () => {
                 placeholder="Enter your address..."
                 value={address}
                 onChange={(e) => handleAddressInput(e.target.value)}
-                className="pl-10 h-10 md:h-11 text-sm md:text-base border-gray-200"
+                className="pl-10 h-10 md:h-11 text-sm md:text-base border-gray-200 font-jakarta"
               />
               {showSuggestions && suggestions.length > 0 && (
                 <div className="absolute mt-1 w-full bg-white rounded-lg shadow-lg border border-gray-100 z-50">
                   {suggestions.map((suggestion) => (
                     <button
                       key={suggestion.id}
-                      className="w-full px-4 py-2 text-left hover:bg-gray-50 text-sm"
+                      className="w-full px-4 py-2 text-left hover:bg-gray-50 text-sm font-jakarta"
                       onClick={() => handleSuggestionClick(suggestion)}
                     >
                       {suggestion.place_name}
@@ -251,10 +251,10 @@ const YardEstimator: React.FC = () => {
               disabled={loading || !suggestions.length}
               variant="default"
               size="default"
-              className="bg-blue-500 hover:bg-blue-600 transition-colors"
+              className="bg-brand-primary hover:bg-brand-primary/90 transition-colors text-white font-jakarta"
             >
               <Search className="h-4 w-4" />
-              <span className="hidden md:inline">Search</span>
+              <span className="hidden md:inline ml-2">Search</span>
             </Button>
           </div>
         </div>
@@ -263,9 +263,9 @@ const YardEstimator: React.FC = () => {
       {/* Area Display */}
       {area && (
         <div className="absolute top-[4.5rem] md:top-20 left-2 right-2 md:left-4 md:right-4 md:left-1/2 md:right-auto md:-translate-x-1/2 z-10">
-          <div className="bg-blue-500/95 text-white backdrop-blur-md p-4 rounded-xl shadow-lg animate-slide-up max-w-md w-full mx-auto">
+          <div className="bg-brand-primary/95 text-white backdrop-blur-md p-4 rounded-xl shadow-lg animate-slide-up max-w-md w-full mx-auto">
             <div className="text-center">
-              <p className="text-xs md:text-sm font-medium text-blue-100 font-archivo">Estimated Yard Size</p>
+              <p className="text-xs md:text-sm font-medium text-white/90 font-archivo">Estimated Yard Size</p>
               <p className="text-2xl md:text-3xl font-bold font-archivo">{area.toLocaleString()} sq ft</p>
             </div>
           </div>
@@ -283,22 +283,22 @@ const YardEstimator: React.FC = () => {
               <X className="h-4 w-4" />
             </button>
             <div className="space-y-2">
-              <h3 className="font-archivo font-semibold text-blue-600 text-sm md:text-base">How to use:</h3>
-              <ol className="text-xs md:text-sm space-y-1.5 text-gray-600">
+              <h3 className="font-archivo font-semibold text-brand-primary text-sm md:text-base">How to use:</h3>
+              <ol className="text-xs md:text-sm space-y-1.5 text-gray-600 font-jakarta">
                 <li className="flex items-start gap-2">
-                  <span className="font-archivo font-semibold text-blue-500">1.</span>
+                  <span className="font-archivo font-semibold text-brand-primary">1.</span>
                   <span>Enter your address to find your property</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="font-archivo font-semibold text-blue-500">2.</span>
+                  <span className="font-archivo font-semibold text-brand-primary">2.</span>
                   <span>Click the polygon tool to start drawing</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="font-archivo font-semibold text-blue-500">3.</span>
+                  <span className="font-archivo font-semibold text-brand-primary">3.</span>
                   <span>Click points around your yard to outline the area</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="font-archivo font-semibold text-blue-500">4.</span>
+                  <span className="font-archivo font-semibold text-brand-primary">4.</span>
                   <span>Click the first point to complete the shape</span>
                 </li>
               </ol>
@@ -312,7 +312,7 @@ const YardEstimator: React.FC = () => {
         onClick={handleReset}
         variant="secondary"
         size="default"
-        className="absolute bottom-6 right-2 md:bottom-4 md:right-4 z-10 bg-white/95 backdrop-blur-md shadow-lg hover:bg-white/100 text-sm border border-gray-200 font-archivo"
+        className="absolute bottom-6 right-2 md:bottom-4 md:right-4 z-10 bg-white/95 backdrop-blur-md shadow-lg hover:bg-white/100 text-sm border border-gray-200 font-archivo text-brand-primary"
       >
         Clear Drawing
       </Button>

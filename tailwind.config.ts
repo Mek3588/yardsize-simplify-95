@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -25,8 +24,8 @@ export default {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         primary: {
-          DEFAULT: "hsl(var(--primary))",
-          foreground: "hsl(var(--primary-foreground))",
+          DEFAULT: "#ff4f18",
+          foreground: "#ffffff",
         },
         secondary: {
           DEFAULT: "hsl(var(--secondary))",
@@ -52,17 +51,9 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        forest: {
-          50: "#f3faf3",
-          100: "#e5f5e5",
-          200: "#ccebcc",
-          300: "#a3d9a3",
-          400: "#73bf73",
-          500: "#4d9e4d",
-          600: "#3d803d",
-          700: "#336633",
-          800: "#2b522b",
-          900: "#254425",
+        brand: {
+          primary: "#ff4f18",
+          white: "#ffffff",
         },
       },
       keyframes: {
@@ -88,4 +79,3 @@ export default {
   },
   plugins: [require("tailwindcss-animate")],
 } satisfies Config;
-
