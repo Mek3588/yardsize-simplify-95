@@ -31,8 +31,13 @@
     @apply border-border;
   }
 
+  html {
+    touch-action: manipulation;
+    overflow: hidden;
+  }
+
   body {
-    @apply bg-background text-foreground antialiased;
+    @apply bg-background text-foreground antialiased overflow-hidden;
   }
 
   /* Custom styles for Mapbox Draw */

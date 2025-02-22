@@ -28,6 +28,20 @@ const YardEstimator: React.FC = () => {
   const [showSuggestions, setShowSuggestions] = useState(false);
 
   useEffect(() => {
+    // Prevent zoom on double tap
+    document.addEventListener('touchstart', function(event) {
+      if (event.touches.length > 1) {
+        event.preventDefault();
+      }
+    }, { passive: false });
+
+    // Prevent pinch zoom
+    document.addEventListener('touchmove', function(event) {
+      if (event.touches.length > 1) {
+        event.preventDefault();
+      }
+    }, { passive: false });
+
     if (!mapContainer.current) return;
 
     mapboxgl.accessToken = 'pk.eyJ1Ijoiam9zZWF0dyIsImEiOiJjbTdjbHM1cWwwc2ttMm5vbXJqemRlc2V1In0.UlFjTgFW2a4HeEZLe8MG3w';
@@ -150,6 +164,17 @@ const YardEstimator: React.FC = () => {
 
     return () => {
       map.current?.remove();
+      // Remove event listeners
+      document.removeEventListener('touchstart', function(event) {
+        if (event.touches.length > 1) {
+          event.preventDefault();
+        }
+      });
+      document.removeEventListener('touchmove', function(event) {
+        if (event.touches.length > 1) {
+          event.preventDefault();
+        }
+      });
     };
   }, []);
 
@@ -216,7 +241,7 @@ const YardEstimator: React.FC = () => {
   };
 
   return (
-    <div className="relative w-full h-screen bg-background touch-manipulation">
+    <div className="relative w-full h-screen bg-background touch-manipulation overflow-hidden">
       <div ref={mapContainer} className="absolute inset-0" />
       
       {/* Search Panel */}
@@ -321,4 +346,3 @@ const YardEstimator: React.FC = () => {
 };
 
 export default YardEstimator;
-
