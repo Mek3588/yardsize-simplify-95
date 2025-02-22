@@ -10,6 +10,12 @@ import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { toast } from 'sonner';
 
+interface Suggestion {
+  id: string;
+  place_name: string;
+  center: [number, number];
+}
+
 const YardEstimator: React.FC = () => {
   const mapContainer = useRef<HTMLDivElement>(null);
   const map = useRef<mapboxgl.Map | null>(null);
@@ -18,6 +24,8 @@ const YardEstimator: React.FC = () => {
   const [address, setAddress] = useState('');
   const [loading, setLoading] = useState(false);
   const [showInstructions, setShowInstructions] = useState(true);
+  const [suggestions, setSuggestions] = useState<Suggestion[]>([]);
+  const [showSuggestions, setShowSuggestions] = useState(false);
 
   useEffect(() => {
     if (!mapContainer.current) return;
@@ -157,29 +165,42 @@ const YardEstimator: React.FC = () => {
     }
   };
 
-  const handleAddressSearch = async () => {
-    if (!address) return;
-    setLoading(true);
+  const handleAddressInput = async (value: string) => {
+    setAddress(value);
+    if (value.length < 3) {
+      setSuggestions([]);
+      setShowSuggestions(false);
+      return;
+    }
 
     try {
       const response = await fetch(
         `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(
-          address
-        )}.json?access_token=${mapboxgl.accessToken}&limit=1`
+          value
+        )}.json?access_token=${mapboxgl.accessToken}&limit=5&types=address`
       );
       const data = await response.json();
+      setSuggestions(data.features);
+      setShowSuggestions(true);
+    } catch (error) {
+      console.error('Error fetching suggestions:', error);
+    }
+  };
 
-      if (data.features && data.features.length > 0) {
-        const [lng, lat] = data.features[0].center;
-        map.current?.flyTo({
-          center: [lng, lat],
-          zoom: 19,
-          duration: 2000
-        });
-        toast.success('Location found!');
-      } else {
-        toast.error('Address not found. Please try again.');
-      }
+  const handleSuggestionClick = async (suggestion: Suggestion) => {
+    setAddress(suggestion.place_name);
+    setSuggestions([]);
+    setShowSuggestions(false);
+    setLoading(true);
+
+    try {
+      const [lng, lat] = suggestion.center;
+      map.current?.flyTo({
+        center: [lng, lat],
+        zoom: 19,
+        duration: 2000
+      });
+      toast.success('Location found!');
     } catch (error) {
       console.error('Error searching address:', error);
       toast.error('Error finding location. Please try again.');
@@ -195,7 +216,7 @@ const YardEstimator: React.FC = () => {
   };
 
   return (
-    <div className="relative w-full h-screen bg-background touch-manipulation">
+    <div className="relative w-full h-screen bg-background touch-manipulation font-jakarta">
       <div ref={mapContainer} className="absolute inset-0" />
       
       {/* Search Panel */}
@@ -208,14 +229,26 @@ const YardEstimator: React.FC = () => {
                 type="text"
                 placeholder="Enter your address..."
                 value={address}
-                onChange={(e) => setAddress(e.target.value)}
+                onChange={(e) => handleAddressInput(e.target.value)}
                 className="pl-10 h-10 md:h-11 text-sm md:text-base border-gray-200"
-                onKeyPress={(e) => e.key === 'Enter' && handleAddressSearch()}
               />
+              {showSuggestions && suggestions.length > 0 && (
+                <div className="absolute mt-1 w-full bg-white rounded-lg shadow-lg border border-gray-100 z-50">
+                  {suggestions.map((suggestion) => (
+                    <button
+                      key={suggestion.id}
+                      className="w-full px-4 py-2 text-left hover:bg-gray-50 text-sm"
+                      onClick={() => handleSuggestionClick(suggestion)}
+                    >
+                      {suggestion.place_name}
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
             <Button 
-              onClick={handleAddressSearch}
-              disabled={loading}
+              onClick={() => handleSuggestionClick(suggestions[0])}
+              disabled={loading || !suggestions.length}
               variant="default"
               size="default"
               className="bg-blue-500 hover:bg-blue-600 transition-colors"
@@ -232,8 +265,8 @@ const YardEstimator: React.FC = () => {
         <div className="absolute top-[4.5rem] md:top-20 left-2 right-2 md:left-4 md:right-4 md:left-1/2 md:right-auto md:-translate-x-1/2 z-10">
           <div className="bg-blue-500/95 text-white backdrop-blur-md p-4 rounded-xl shadow-lg animate-slide-up max-w-md w-full mx-auto">
             <div className="text-center">
-              <p className="text-xs md:text-sm font-medium text-blue-100">Estimated Yard Size</p>
-              <p className="text-2xl md:text-3xl font-bold">{area.toLocaleString()} sq ft</p>
+              <p className="text-xs md:text-sm font-medium text-blue-100 font-archivo">Estimated Yard Size</p>
+              <p className="text-2xl md:text-3xl font-bold font-archivo">{area.toLocaleString()} sq ft</p>
             </div>
           </div>
         </div>
@@ -250,22 +283,22 @@ const YardEstimator: React.FC = () => {
               <X className="h-4 w-4" />
             </button>
             <div className="space-y-2">
-              <h3 className="font-semibold text-blue-600 text-sm md:text-base">How to use:</h3>
+              <h3 className="font-archivo font-semibold text-blue-600 text-sm md:text-base">How to use:</h3>
               <ol className="text-xs md:text-sm space-y-1.5 text-gray-600">
                 <li className="flex items-start gap-2">
-                  <span className="font-semibold text-blue-500">1.</span>
+                  <span className="font-archivo font-semibold text-blue-500">1.</span>
                   <span>Enter your address to find your property</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="font-semibold text-blue-500">2.</span>
+                  <span className="font-archivo font-semibold text-blue-500">2.</span>
                   <span>Click the polygon tool to start drawing</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="font-semibold text-blue-500">3.</span>
+                  <span className="font-archivo font-semibold text-blue-500">3.</span>
                   <span>Click points around your yard to outline the area</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="font-semibold text-blue-500">4.</span>
+                  <span className="font-archivo font-semibold text-blue-500">4.</span>
                   <span>Click the first point to complete the shape</span>
                 </li>
               </ol>
@@ -279,7 +312,7 @@ const YardEstimator: React.FC = () => {
         onClick={handleReset}
         variant="secondary"
         size="default"
-        className="absolute bottom-6 right-2 md:bottom-4 md:right-4 z-10 bg-white/95 backdrop-blur-md shadow-lg hover:bg-white/100 text-sm border border-gray-200"
+        className="absolute bottom-6 right-2 md:bottom-4 md:right-4 z-10 bg-white/95 backdrop-blur-md shadow-lg hover:bg-white/100 text-sm border border-gray-200 font-archivo"
       >
         Clear Drawing
       </Button>
