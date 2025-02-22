@@ -5,9 +5,10 @@ import MapboxDraw from '@mapbox/mapbox-gl-draw';
 import * as turf from '@turf/turf';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
-import { Search, X } from 'lucide-react';
+import { Search, X, MapPin } from 'lucide-react';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
+import { toast } from 'sonner';
 
 const YardEstimator: React.FC = () => {
   const mapContainer = useRef<HTMLDivElement>(null);
@@ -26,12 +27,11 @@ const YardEstimator: React.FC = () => {
     map.current = new mapboxgl.Map({
       container: mapContainer.current,
       style: 'mapbox://styles/mapbox/satellite-streets-v12',
-      center: [-98.5795, 39.8283], // USA center
+      center: [-98.5795, 39.8283],
       zoom: 3,
-      attributionControl: false // Hide attribution for more space on mobile
+      attributionControl: false
     });
 
-    // Add attribution control in a better position for mobile
     map.current.addControl(new mapboxgl.AttributionControl(), 'bottom-left');
 
     draw.current = new MapboxDraw({
@@ -40,12 +40,100 @@ const YardEstimator: React.FC = () => {
         polygon: true,
         trash: true
       },
-      defaultMode: 'draw_polygon'
+      defaultMode: 'draw_polygon',
+      styles: [
+        {
+          'id': 'gl-draw-polygon-fill-inactive',
+          'type': 'fill',
+          'filter': ['all', ['==', 'active', 'false'],
+            ['==', '$type', 'Polygon'],
+            ['!=', 'mode', 'static']
+          ],
+          'paint': {
+            'fill-color': '#3B82F6',
+            'fill-outline-color': '#3B82F6',
+            'fill-opacity': 0.3
+          }
+        },
+        {
+          'id': 'gl-draw-polygon-fill-active',
+          'type': 'fill',
+          'filter': ['all', ['==', 'active', 'true'],
+            ['==', '$type', 'Polygon']
+          ],
+          'paint': {
+            'fill-color': '#3B82F6',
+            'fill-outline-color': '#3B82F6',
+            'fill-opacity': 0.4
+          }
+        },
+        {
+          'id': 'gl-draw-polygon-stroke-inactive',
+          'type': 'line',
+          'filter': ['all',
+            ['==', 'active', 'false'],
+            ['==', '$type', 'Polygon'],
+            ['!=', 'mode', 'static']
+          ],
+          'layout': {
+            'line-cap': 'round',
+            'line-join': 'round'
+          },
+          'paint': {
+            'line-color': '#3B82F6',
+            'line-width': 3
+          }
+        },
+        {
+          'id': 'gl-draw-polygon-stroke-active',
+          'type': 'line',
+          'filter': ['all', ['==', 'active', 'true'],
+            ['==', '$type', 'Polygon']
+          ],
+          'layout': {
+            'line-cap': 'round',
+            'line-join': 'round'
+          },
+          'paint': {
+            'line-color': '#3B82F6',
+            'line-dasharray': [0.2, 2],
+            'line-width': 3
+          }
+        },
+        {
+          'id': 'gl-draw-polygon-vertex-inactive',
+          'type': 'circle',
+          'filter': ['all',
+            ['==', 'meta', 'vertex'],
+            ['==', '$type', 'Point'],
+            ['!=', 'mode', 'static']
+          ],
+          'paint': {
+            'circle-radius': 5,
+            'circle-color': '#fff',
+            'circle-stroke-color': '#3B82F6',
+            'circle-stroke-width': 2
+          }
+        },
+        {
+          'id': 'gl-draw-polygon-vertex-active',
+          'type': 'circle',
+          'filter': ['all',
+            ['==', 'meta', 'vertex'],
+            ['==', '$type', 'Point'],
+            ['==', 'active', 'true'],
+          ],
+          'paint': {
+            'circle-radius': 7,
+            'circle-color': '#fff',
+            'circle-stroke-color': '#3B82F6',
+            'circle-stroke-width': 3
+          }
+        }
+      ]
     });
 
     map.current.addControl(draw.current);
-
-    // Add zoom controls in a better position for mobile
     map.current.addControl(new mapboxgl.NavigationControl({ showCompass: false }), 'bottom-right');
 
     map.current.on('draw.create', updateArea);
@@ -61,8 +149,9 @@ const YardEstimator: React.FC = () => {
     const data = draw.current.getAll();
     if (data.features.length > 0) {
       const area = turf.area(data);
-      const squareFeet = area * 10.7639; // Convert to square feet
+      const squareFeet = area * 10.7639;
       setArea(Math.round(squareFeet));
+      toast.success('Yard size calculated!');
     } else {
       setArea(null);
     }
@@ -87,9 +176,13 @@ const YardEstimator: React.FC = () => {
           zoom: 19,
           duration: 2000
         });
+        toast.success('Location found!');
+      } else {
+        toast.error('Address not found. Please try again.');
       }
     } catch (error) {
       console.error('Error searching address:', error);
+      toast.error('Error finding location. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -98,83 +191,101 @@ const YardEstimator: React.FC = () => {
   const handleReset = () => {
     draw.current?.deleteAll();
     setArea(null);
+    toast('Drawing cleared');
   };
 
   return (
     <div className="relative w-full h-screen bg-background touch-manipulation">
       <div ref={mapContainer} className="absolute inset-0" />
       
-      {/* Search Panel - Made more compact on mobile */}
+      {/* Search Panel */}
       <div className="absolute top-2 left-2 right-2 md:top-4 md:left-4 md:right-4 md:left-1/2 md:right-auto md:-translate-x-1/2 z-10">
-        <div className="bg-white/90 backdrop-blur-md p-2 md:p-4 rounded-lg shadow-lg animate-fade-in max-w-md w-full mx-auto">
+        <div className="bg-white/95 backdrop-blur-md p-3 md:p-4 rounded-xl shadow-lg animate-fade-in max-w-md w-full mx-auto border border-gray-100">
           <div className="flex gap-2">
-            <Input
-              type="text"
-              placeholder="Enter your address..."
-              value={address}
-              onChange={(e) => setAddress(e.target.value)}
-              className="flex-1 h-9 md:h-10 text-sm md:text-base"
-              onKeyPress={(e) => e.key === 'Enter' && handleAddressSearch()}
-            />
+            <div className="relative flex-1">
+              <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
+              <Input
+                type="text"
+                placeholder="Enter your address..."
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
+                className="pl-10 h-10 md:h-11 text-sm md:text-base border-gray-200"
+                onKeyPress={(e) => e.key === 'Enter' && handleAddressSearch()}
+              />
+            </div>
             <Button 
               onClick={handleAddressSearch}
               disabled={loading}
-              variant="secondary"
-              size="sm"
-              className="md:size-default"
+              variant="default"
+              size="default"
+              className="bg-blue-500 hover:bg-blue-600 transition-colors"
             >
               <Search className="h-4 w-4" />
+              <span className="hidden md:inline">Search</span>
             </Button>
           </div>
         </div>
       </div>
 
-      {/* Area Display - Adjusted for better mobile visibility */}
+      {/* Area Display */}
       {area && (
-        <div className="absolute top-16 md:top-20 left-2 right-2 md:left-4 md:right-4 md:left-1/2 md:right-auto md:-translate-x-1/2 z-10">
-          <div className="bg-forest-500/90 text-white backdrop-blur-md p-3 md:p-4 rounded-lg shadow-lg animate-slide-up max-w-md w-full mx-auto">
+        <div className="absolute top-[4.5rem] md:top-20 left-2 right-2 md:left-4 md:right-4 md:left-1/2 md:right-auto md:-translate-x-1/2 z-10">
+          <div className="bg-blue-500/95 text-white backdrop-blur-md p-4 rounded-xl shadow-lg animate-slide-up max-w-md w-full mx-auto">
             <div className="text-center">
-              <p className="text-xs md:text-sm font-medium">Estimated Yard Size</p>
-              <p className="text-xl md:text-2xl font-bold">{area.toLocaleString()} sq ft</p>
+              <p className="text-xs md:text-sm font-medium text-blue-100">Estimated Yard Size</p>
+              <p className="text-2xl md:text-3xl font-bold">{area.toLocaleString()} sq ft</p>
             </div>
           </div>
         </div>
       )}
 
-      {/* Instructions Panel - More compact on mobile */}
+      {/* Instructions Panel */}
       {showInstructions && (
-        <div className="absolute bottom-16 md:bottom-4 left-2 right-2 md:left-4 md:right-4 md:left-1/2 md:right-auto md:-translate-x-1/2 z-10">
-          <div className="bg-white/90 backdrop-blur-md p-3 md:p-4 rounded-lg shadow-lg animate-fade-in max-w-md w-full mx-auto">
+        <div className="absolute bottom-20 md:bottom-6 left-2 right-2 md:left-4 md:right-4 md:left-1/2 md:right-auto md:-translate-x-1/2 z-10">
+          <div className="bg-white/95 backdrop-blur-md p-4 rounded-xl shadow-lg animate-fade-in max-w-md w-full mx-auto border border-gray-100">
             <button
               onClick={() => setShowInstructions(false)}
-              className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
+              className="absolute top-3 right-3 text-gray-400 hover:text-gray-600 transition-colors"
             >
-              <X className="h-3 w-3 md:h-4 md:w-4" />
+              <X className="h-4 w-4" />
             </button>
-            <div className="space-y-1 md:space-y-2">
-              <h3 className="font-semibold text-forest-700 text-sm md:text-base">How to use:</h3>
-              <ol className="text-xs md:text-sm space-y-0.5 md:space-y-1 text-gray-600">
-                <li>1. Enter your address to find your property</li>
-                <li>2. Click the polygon tool to start drawing</li>
-                <li>3. Click points around your yard to outline the area</li>
-                <li>4. Click the first point to complete the shape</li>
+            <div className="space-y-2">
+              <h3 className="font-semibold text-blue-600 text-sm md:text-base">How to use:</h3>
+              <ol className="text-xs md:text-sm space-y-1.5 text-gray-600">
+                <li className="flex items-start gap-2">
+                  <span className="font-semibold text-blue-500">1.</span>
+                  <span>Enter your address to find your property</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="font-semibold text-blue-500">2.</span>
+                  <span>Click the polygon tool to start drawing</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="font-semibold text-blue-500">3.</span>
+                  <span>Click points around your yard to outline the area</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="font-semibold text-blue-500">4.</span>
+                  <span>Click the first point to complete the shape</span>
+                </li>
               </ol>
             </div>
           </div>
         </div>
       )}
 
-      {/* Reset Button - Adjusted position and size for mobile */}
+      {/* Reset Button */}
       <Button
         onClick={handleReset}
         variant="secondary"
-        size="sm"
-        className="absolute bottom-16 right-2 md:bottom-4 md:right-4 z-10 bg-white/90 backdrop-blur-md shadow-lg hover:bg-white/100 text-xs md:text-sm"
+        size="default"
+        className="absolute bottom-6 right-2 md:bottom-4 md:right-4 z-10 bg-white/95 backdrop-blur-md shadow-lg hover:bg-white/100 text-sm border border-gray-200"
       >
-        Reset
+        Clear Drawing
       </Button>
     </div>
   );
 };
 
 export default YardEstimator;
+
