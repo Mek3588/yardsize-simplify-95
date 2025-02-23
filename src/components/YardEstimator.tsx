@@ -241,7 +241,7 @@ const YardEstimator: React.FC = () => {
   };
 
   return (
-    <div className="relative w-full h-screen bg-background touch-manipulation overflow-hidden">
+    <div className="relative w-full h-[100dvh] bg-background touch-manipulation overflow-hidden">
       <div ref={mapContainer} className="absolute inset-0" />
       
       {/* Search Panel */}
@@ -255,7 +255,8 @@ const YardEstimator: React.FC = () => {
                 placeholder="Enter your address..."
                 value={address}
                 onChange={(e) => handleAddressInput(e.target.value)}
-                className="pl-10 h-10 md:h-11 text-sm md:text-base border-gray-200 font-jakarta"
+                className="pl-10 h-10 md:h-11 text-sm md:text-base border-gray-200 font-jakarta font-normal"
+                style={{ fontSize: '16px' }}
               />
               {showSuggestions && suggestions.length > 0 && (
                 <div className="absolute mt-1 w-full bg-white rounded-lg shadow-lg border border-gray-100 z-50">
