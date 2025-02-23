@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef, useState } from 'react';
 import mapboxgl from 'mapbox-gl';
 import MapboxDraw from '@mapbox/mapbox-gl-draw';
@@ -326,6 +325,10 @@ const YardEstimator: React.FC = () => {
                 <li className="flex items-start gap-2">
                   <span className="font-archivo font-semibold text-brand-primary">4.</span>
                   <span className="font-jakarta">Click the first point to complete the shape</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="font-archivo font-semibold text-brand-primary">5.</span>
+                  <span className="font-jakarta">Make sure to include all areas you want to be part of your project (front yard, backyard, side yards) for accurate square footage calculation and design package selection</span>
                 </li>
               </ol>
             </div>
