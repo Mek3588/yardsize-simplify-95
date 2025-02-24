@@ -6,19 +6,15 @@ import Map from './yard-estimator/Map';
 import SearchPanel from './yard-estimator/SearchPanel';
 import Instructions from './yard-estimator/Instructions';
 import AreaDisplay from './yard-estimator/AreaDisplay';
-import mapboxgl from 'mapbox-gl';
 
 const YardEstimator: React.FC = () => {
   const [area, setArea] = useState<number | null>(null);
   const [showInstructions, setShowInstructions] = useState(true);
-  const [map, setMap] = useState<mapboxgl.Map | null>(null);
 
   const handleLocationSelect = (center: [number, number]) => {
-    map?.flyTo({
-      center: center,
-      zoom: 19,
-      duration: 2000
-    });
+    // The map instance is managed within the Map component
+    // We need to pass the center coordinates to update the map view
+    window.dispatchEvent(new CustomEvent('updateMapCenter', { detail: { center } }));
   };
 
   const handleReset = () => {
@@ -33,7 +29,6 @@ const YardEstimator: React.FC = () => {
       {area && <AreaDisplay area={area} />}
       {showInstructions && <Instructions onClose={() => setShowInstructions(false)} />}
       
-      {/* Reset Button */}
       <Button
         onClick={handleReset}
         variant="secondary"

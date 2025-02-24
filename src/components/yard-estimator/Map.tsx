@@ -1,3 +1,4 @@
+
 import React, { useEffect, useRef } from 'react';
 import mapboxgl from 'mapbox-gl';
 import MapboxDraw from '@mapbox/mapbox-gl-draw';
@@ -162,8 +163,22 @@ const Map: React.FC<MapProps> = ({ onAreaUpdate }) => {
     map.current.on('draw.delete', updateArea);
     map.current.on('draw.update', updateArea);
 
+    // Add listener for center updates
+    const handleCenterUpdate = (event: CustomEvent) => {
+      if (map.current && event.detail.center) {
+        map.current.flyTo({
+          center: event.detail.center,
+          zoom: 19,
+          duration: 2000
+        });
+      }
+    };
+
+    window.addEventListener('updateMapCenter', handleCenterUpdate as EventListener);
+
     return () => {
       map.current?.remove();
+      window.removeEventListener('updateMapCenter', handleCenterUpdate as EventListener);
       document.removeEventListener('touchstart', function(event) {
         if (event.touches.length > 1) {
           event.preventDefault();
