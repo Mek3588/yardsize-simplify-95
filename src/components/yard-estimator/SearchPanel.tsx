@@ -22,6 +22,11 @@ const SearchPanel: React.FC<SearchPanelProps> = ({ onLocationSelect }) => {
   const [suggestions, setSuggestions] = useState<Suggestion[]>([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
 
+  const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+    console.error('Error loading image:', e);
+    toast.error('Failed to load company logo');
+  };
+
   const handleAddressInput = async (value: string) => {
     setAddress(value);
     if (value.length < 3) {
@@ -66,9 +71,11 @@ const SearchPanel: React.FC<SearchPanelProps> = ({ onLocationSelect }) => {
       <div className="bg-white/95 backdrop-blur-md p-3 md:p-4 rounded-xl shadow-lg animate-fade-in max-w-3xl w-full mx-auto border border-gray-100">
         <div className="flex items-center gap-4">
           <img
-            src="/lovable-uploads/0e06ee1d-828b-49bf-a339-e450c49735bf.png"
+            src="lovable-uploads/0e06ee1d-828b-49bf-a339-e450c49735bf.png"
             alt="Company Logo"
             className="h-8 md:h-10 w-auto"
+            onError={handleImageError}
+            onLoad={() => console.log('Logo loaded successfully')}
           />
           <div className="flex-1 flex gap-2">
             <div className="relative flex-1">
