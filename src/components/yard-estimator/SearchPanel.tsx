@@ -66,7 +66,7 @@ const SearchPanel: React.FC<SearchPanelProps> = ({ onLocationSelect }) => {
       <div className="bg-white/95 backdrop-blur-md p-3 md:p-4 rounded-xl shadow-lg animate-fade-in max-w-3xl w-full mx-auto border border-gray-100">
         <div className="flex items-center gap-4">
           <img
-            src="/placeholder.svg"
+            src="/lovable-uploads/0e06ee1d-828b-49bf-a339-e450c49735bf.png"
             alt="Company Logo"
             className="h-8 md:h-10 w-auto"
           />
