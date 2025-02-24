@@ -12,8 +12,6 @@ const YardEstimator: React.FC = () => {
   const [showInstructions, setShowInstructions] = useState(true);
 
   const handleLocationSelect = (center: [number, number]) => {
-    // The map instance is managed within the Map component
-    // We need to pass the center coordinates to update the map view
     window.dispatchEvent(new CustomEvent('updateMapCenter', { detail: { center } }));
   };
 
@@ -34,7 +32,7 @@ const YardEstimator: React.FC = () => {
           onClick={handleReset}
           variant="secondary"
           size="default"
-          className="absolute bottom-4 right-2 md:right-4 z-10 bg-white/95 backdrop-blur-md shadow-lg hover:bg-white/100 text-sm border border-gray-200 font-archivo text-brand-primary"
+          className="absolute bottom-4 left-2 md:left-4 z-10 bg-white/95 backdrop-blur-md shadow-lg hover:bg-white/100 text-sm border border-gray-200 font-archivo text-brand-primary"
         >
           Clear Drawing
         </Button>
