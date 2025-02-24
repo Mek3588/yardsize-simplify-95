@@ -8,8 +8,8 @@ interface InstructionsProps {
 
 const Instructions: React.FC<InstructionsProps> = ({ onClose }) => {
   return (
-    <div className="absolute bottom-20 md:bottom-6 left-2 right-2 md:left-4 md:right-4 md:left-1/2 md:right-auto md:-translate-x-1/2 z-10">
-      <div className="bg-white/95 backdrop-blur-md p-4 rounded-xl shadow-lg animate-fade-in max-w-md w-full mx-auto border border-gray-100">
+    <div className="absolute bottom-[calc(2rem+44px)] md:bottom-20 left-2 right-2 md:left-4 md:max-w-md z-10">
+      <div className="bg-white/95 backdrop-blur-md p-4 rounded-xl shadow-lg animate-fade-in w-full mx-auto border border-gray-100">
         <button
           onClick={onClose}
           className="absolute top-3 right-3 text-gray-400 hover:text-gray-600 transition-colors"

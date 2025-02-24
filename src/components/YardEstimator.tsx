@@ -23,20 +23,22 @@ const YardEstimator: React.FC = () => {
   };
 
   return (
-    <div className="relative w-full h-[100dvh] bg-background touch-manipulation overflow-hidden">
-      <Map onAreaUpdate={setArea} />
-      <SearchPanel onLocationSelect={handleLocationSelect} />
-      {area && <AreaDisplay area={area} />}
-      {showInstructions && <Instructions onClose={() => setShowInstructions(false)} />}
-      
-      <Button
-        onClick={handleReset}
-        variant="secondary"
-        size="default"
-        className="absolute bottom-6 right-2 md:bottom-4 md:right-4 z-10 bg-white/95 backdrop-blur-md shadow-lg hover:bg-white/100 text-sm border border-gray-200 font-archivo text-brand-primary"
-      >
-        Clear Drawing
-      </Button>
+    <div className="relative w-full h-[100dvh] bg-background touch-manipulation flex flex-col">
+      <div className="relative flex-1 overflow-hidden">
+        <Map onAreaUpdate={setArea} />
+        <SearchPanel onLocationSelect={handleLocationSelect} />
+        {area && <AreaDisplay area={area} />}
+        {showInstructions && <Instructions onClose={() => setShowInstructions(false)} />}
+        
+        <Button
+          onClick={handleReset}
+          variant="secondary"
+          size="default"
+          className="absolute bottom-4 right-2 md:right-4 z-10 bg-white/95 backdrop-blur-md shadow-lg hover:bg-white/100 text-sm border border-gray-200 font-archivo text-brand-primary"
+        >
+          Clear Drawing
+        </Button>
+      </div>
     </div>
   );
 };
