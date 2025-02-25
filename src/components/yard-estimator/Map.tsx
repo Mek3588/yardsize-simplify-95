@@ -144,14 +144,47 @@ const Map: React.FC<MapProps> = ({ onAreaUpdate }) => {
       ]
     });
 
-    // Position the draw controls for better visibility
-    const drawControls = document.querySelector('.mapboxgl-ctrl-top-right');
-    if (drawControls) {
-      drawControls.classList.add('mt-20', 'mr-2', 'md:mr-4');
-    }
+    // Create a custom container for the draw controls
+    const customContainer = document.createElement('div');
+    customContainer.className = 'custom-draw-controls fixed top-16 right-2 md:right-4 z-[999]';
+    document.body.appendChild(customContainer);
 
-    map.current.addControl(draw.current);
+    // Add the draw control to our custom container
+    map.current.addControl(draw.current, customContainer);
     map.current.addControl(new mapboxgl.NavigationControl({ showCompass: false }), 'bottom-right');
+
+    // Add custom styles for the draw controls
+    const style = document.createElement('style');
+    style.textContent = `
+      .custom-draw-controls {
+        background: white;
+        border-radius: 4px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        overflow: hidden;
+      }
+      .custom-draw-controls .mapbox-gl-draw_ctrl-draw-btn {
+        width: 100% !important;
+        height: 100% !important;
+        position: relative !important;
+        cursor: pointer !important;
+        background-color: white !important;
+        border: 1px solid #e2e8f0 !important;
+        margin: 0 !important;
+      }
+      .custom-draw-controls .mapbox-gl-draw_ctrl-draw-btn:hover {
+        background-color: #f8fafc !important;
+      }
+      .custom-draw-controls .mapboxgl-ctrl-group {
+        margin: 0 !important;
+        box-shadow: none !important;
+      }
+      .mapbox-gl-draw_ctrl-draw-btn::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+      }
+    `;
+    document.head.appendChild(style);
 
     const updateArea = () => {
       const data = draw.current.getAll();
@@ -190,23 +223,6 @@ const Map: React.FC<MapProps> = ({ onAreaUpdate }) => {
     window.addEventListener('updateMapCenter', handleCenterUpdate as EventListener);
     window.addEventListener('clearDrawing', handleClearDrawing as EventListener);
 
-    // Add CSS to make draw buttons fully clickable
-    const style = document.createElement('style');
-    style.textContent = `
-      .mapbox-gl-draw_ctrl-draw-btn {
-        width: 100% !important;
-        height: 100% !important;
-        position: relative !important;
-        cursor: pointer !important;
-      }
-      .mapbox-gl-draw_ctrl-draw-btn::after {
-        content: '';
-        position: absolute;
-        inset: 0;
-      }
-    `;
-    document.head.appendChild(style);
-
     return () => {
       map.current?.remove();
       window.removeEventListener('updateMapCenter', handleCenterUpdate as EventListener);
@@ -221,6 +237,9 @@ const Map: React.FC<MapProps> = ({ onAreaUpdate }) => {
           event.preventDefault();
         }
       });
+      if (customContainer) {
+        customContainer.remove();
+      }
       style.remove();
     };
   }, [onAreaUpdate]);
