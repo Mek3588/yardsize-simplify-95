@@ -55,6 +55,6 @@
   }
 
   .mapboxgl-ctrl-group button:focus {
-    @apply !ring-2 !ring-forest-500 !ring-offset-2;
+    @apply !ring-2 !ring-primary !ring-offset-2;
   }
 }
