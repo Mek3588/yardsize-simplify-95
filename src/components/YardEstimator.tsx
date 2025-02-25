@@ -17,6 +17,7 @@ const YardEstimator: React.FC = () => {
 
   const handleReset = () => {
     setArea(null);
+    window.dispatchEvent(new CustomEvent('clearDrawing'));
     toast('Drawing cleared');
   };
 

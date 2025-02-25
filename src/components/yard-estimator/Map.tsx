@@ -144,6 +144,12 @@ const Map: React.FC<MapProps> = ({ onAreaUpdate }) => {
       ]
     });
 
+    // Position the draw controls for better visibility
+    const drawControls = document.querySelector('.mapboxgl-ctrl-top-right');
+    if (drawControls) {
+      drawControls.classList.add('mt-20', 'mr-2', 'md:mr-4');
+    }
+
     map.current.addControl(draw.current);
     map.current.addControl(new mapboxgl.NavigationControl({ showCompass: false }), 'bottom-right');
 
@@ -174,11 +180,37 @@ const Map: React.FC<MapProps> = ({ onAreaUpdate }) => {
       }
     };
 
+    // Add listener for clearing drawing
+    const handleClearDrawing = () => {
+      if (draw.current) {
+        draw.current.deleteAll();
+      }
+    };
+
     window.addEventListener('updateMapCenter', handleCenterUpdate as EventListener);
+    window.addEventListener('clearDrawing', handleClearDrawing as EventListener);
+
+    // Add CSS to make draw buttons fully clickable
+    const style = document.createElement('style');
+    style.textContent = `
+      .mapbox-gl-draw_ctrl-draw-btn {
+        width: 100% !important;
+        height: 100% !important;
+        position: relative !important;
+        cursor: pointer !important;
+      }
+      .mapbox-gl-draw_ctrl-draw-btn::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+      }
+    `;
+    document.head.appendChild(style);
 
     return () => {
       map.current?.remove();
       window.removeEventListener('updateMapCenter', handleCenterUpdate as EventListener);
+      window.removeEventListener('clearDrawing', handleClearDrawing as EventListener);
       document.removeEventListener('touchstart', function(event) {
         if (event.touches.length > 1) {
           event.preventDefault();
@@ -189,6 +221,7 @@ const Map: React.FC<MapProps> = ({ onAreaUpdate }) => {
           event.preventDefault();
         }
       });
+      style.remove();
     };
   }, [onAreaUpdate]);
 
