@@ -1,21 +1,10 @@
 
 import React, { useEffect, useRef } from 'react';
-import mapboxgl, { LngLatLike } from 'mapbox-gl';
+import mapboxgl from 'mapbox-gl';
 import { useNavigate } from 'react-router-dom';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
-interface MapProps {
-  onAreaUpdate?: (area: number | null) => void;
-}
-
-interface MapCoordinates {
-  center: LngLatLike;
-  zoom: number;
-  pitch?: number;
-  bearing?: number;
-}
-
-const Map: React.FC<MapProps> = () => {
+const Map: React.FC = () => {
   const mapContainer = useRef<HTMLDivElement>(null);
   const map = useRef<mapboxgl.Map | null>(null);
   const navigate = useNavigate();
@@ -23,11 +12,9 @@ const Map: React.FC<MapProps> = () => {
   useEffect(() => {
     if (!mapContainer.current) return;
 
-    // Check if device is mobile
     const isMobile = window.innerWidth <= 768;
     
-    // Set different initial coordinates and zoom level based on device type
-    const initialCoordinates: MapCoordinates = isMobile 
+    const initialCoordinates = isMobile 
       ? { 
           center: [-100, 45] as [number, number],
           zoom: 2,
@@ -58,10 +45,21 @@ const Map: React.FC<MapProps> = () => {
 
     // Add country click handler
     map.current.on('click', (e) => {
-      // This is a simplified example - in a real application, you would use
-      // a geocoding service or feature state to determine the country
-      // For now, we'll just use the USA as an example
-      navigate('/country/USA');
+      // For demonstration purposes, we'll determine the country based on coordinates
+      // In a real application, you would use proper geocoding
+      const lng = e.lngLat.lng;
+      const lat = e.lngLat.lat;
+      
+      // Simple coordinate-based country detection (this is just for demonstration)
+      if (lng > -125 && lng < -66 && lat > 25 && lat < 49) {
+        navigate('/country/USA');
+      } else if (lng > -10 && lng < 2 && lat > 50 && lat < 59) {
+        navigate('/country/UK');
+      } else if (lng > -5 && lng < 10 && lat > 42 && lat < 51) {
+        navigate('/country/FRA');
+      } else if (lng > 5 && lng < 15 && lat > 47 && lat < 55) {
+        navigate('/country/GER');
+      }
     });
 
     // Add listener for center updates

@@ -21,23 +21,15 @@ const Instructions: React.FC<InstructionsProps> = ({ onClose }) => {
           <ol className="text-xs md:text-sm space-y-1.5 text-gray-600">
             <li className="flex items-start gap-2">
               <span className="font-archivo font-semibold text-brand-primary">1.</span>
-              <span className="font-jakarta">Enter your address to find your property</span>
+              <span className="font-jakarta">Click on any country on the map to view its details</span>
             </li>
             <li className="flex items-start gap-2">
               <span className="font-archivo font-semibold text-brand-primary">2.</span>
-              <span className="font-jakarta">Click the polygon tool to start drawing</span>
+              <span className="font-jakarta">Explore the country's history and popular places</span>
             </li>
             <li className="flex items-start gap-2">
               <span className="font-archivo font-semibold text-brand-primary">3.</span>
-              <span className="font-jakarta">Click points around your yard to outline the area</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="font-archivo font-semibold text-brand-primary">4.</span>
-              <span className="font-jakarta">Click the first point to complete the shape</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="font-archivo font-semibold text-brand-primary">5.</span>
-              <span className="font-jakarta">Make sure to include all areas you want to be part of your project (front yard, backyard, side yards) for accurate square footage calculation and design package selection</span>
+              <span className="font-jakarta">Check the country's global rankings in various categories</span>
             </li>
           </ol>
         </div>
