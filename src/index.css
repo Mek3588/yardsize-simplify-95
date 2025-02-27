@@ -61,16 +61,22 @@
   /* Position Mapbox controls below the search bar on mobile */
   @media (max-width: 768px) {
     .mapboxgl-control-container .mapboxgl-ctrl-top-right {
-      top: 140px !important;
+      top: 120px !important;
     }
 
-    /* Make controls more visible on mobile */
+    /* Make controls visible but not too large on mobile */
     .mapboxgl-ctrl-group {
-      @apply !shadow-xl !border !border-gray-200;
+      @apply !shadow-lg !border !border-gray-100;
     }
 
     .mapboxgl-ctrl-group button {
-      @apply !w-12 !h-12;
+      @apply !w-10 !h-10;
+    }
+
+    /* Adjust bottom navigation controls position */
+    .mapboxgl-ctrl-bottom-right {
+      bottom: 160px !important;
+      right: 10px !important;
     }
   }
 }
