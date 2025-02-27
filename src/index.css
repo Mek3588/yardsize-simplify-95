@@ -63,6 +63,14 @@
     .mapboxgl-control-container .mapboxgl-ctrl-top-right {
       top: 140px !important;
     }
+
+    /* Make controls more visible on mobile */
+    .mapboxgl-ctrl-group {
+      @apply !shadow-xl !border !border-gray-200;
+    }
+
+    .mapboxgl-ctrl-group button {
+      @apply !w-12 !h-12;
+    }
   }
 }
-

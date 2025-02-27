@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef } from 'react';
 import mapboxgl, { LngLatLike } from 'mapbox-gl';
 import MapboxDraw from '@mapbox/mapbox-gl-draw';
@@ -14,6 +13,8 @@ interface MapProps {
 interface MapCoordinates {
   center: LngLatLike;
   zoom: number;
+  pitch?: number;
+  bearing?: number;
 }
 
 const Map: React.FC<MapProps> = ({ onAreaUpdate }) => {
@@ -43,8 +44,18 @@ const Map: React.FC<MapProps> = ({ onAreaUpdate }) => {
     
     // Set different initial coordinates and zoom level based on device type
     const initialCoordinates: MapCoordinates = isMobile 
-      ? { center: [-98.5795, 45] as [number, number], zoom: 2.5 }
-      : { center: [-98.5795, 39.8283] as [number, number], zoom: 3 };
+      ? { 
+          center: [-100, 45] as [number, number],
+          zoom: 2,
+          pitch: 0,
+          bearing: 0
+        }
+      : { 
+          center: [-98.5795, 39.8283] as [number, number],
+          zoom: 3,
+          pitch: 0,
+          bearing: 0
+        };
 
     mapboxgl.accessToken = 'pk.eyJ1Ijoiam9zZWF0dyIsImEiOiJjbTdjbHM1cWwwc2ttMm5vbXJqemRlc2V1In0.UlFjTgFW2a4HeEZLe8MG3w';
     
@@ -53,6 +64,8 @@ const Map: React.FC<MapProps> = ({ onAreaUpdate }) => {
       style: 'mapbox://styles/mapbox/satellite-streets-v12',
       center: initialCoordinates.center,
       zoom: initialCoordinates.zoom,
+      pitch: initialCoordinates.pitch,
+      bearing: initialCoordinates.bearing,
       attributionControl: false
     });
 
