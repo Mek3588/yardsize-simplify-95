@@ -33,13 +33,21 @@ const Map: React.FC<MapProps> = ({ onAreaUpdate }) => {
 
     if (!mapContainer.current) return;
 
+    // Check if device is mobile
+    const isMobile = window.innerWidth <= 768;
+    
+    // Set different initial coordinates and zoom level based on device type
+    const initialCoordinates = isMobile 
+      ? { center: [-98.5795, 45], zoom: 2.5 }  // Centered on North America, zoomed out
+      : { center: [-98.5795, 39.8283], zoom: 3 };  // Original coordinates
+
     mapboxgl.accessToken = 'pk.eyJ1Ijoiam9zZWF0dyIsImEiOiJjbTdjbHM1cWwwc2ttMm5vbXJqemRlc2V1In0.UlFjTgFW2a4HeEZLe8MG3w';
     
     map.current = new mapboxgl.Map({
       container: mapContainer.current,
       style: 'mapbox://styles/mapbox/satellite-streets-v12',
-      center: [-98.5795, 39.8283],
-      zoom: 3,
+      center: initialCoordinates.center,
+      zoom: initialCoordinates.zoom,
       attributionControl: false
     });
 
@@ -251,3 +259,4 @@ const Map: React.FC<MapProps> = ({ onAreaUpdate }) => {
 };
 
 export default Map;
+
