@@ -1,6 +1,6 @@
 
 import React, { useEffect, useRef } from 'react';
-import mapboxgl from 'mapbox-gl';
+import mapboxgl, { LngLatLike } from 'mapbox-gl';
 import MapboxDraw from '@mapbox/mapbox-gl-draw';
 import * as turf from '@turf/turf';
 import { toast } from 'sonner';
@@ -9,6 +9,11 @@ import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
 
 interface MapProps {
   onAreaUpdate: (area: number | null) => void;
+}
+
+interface MapCoordinates {
+  center: LngLatLike;
+  zoom: number;
 }
 
 const Map: React.FC<MapProps> = ({ onAreaUpdate }) => {
@@ -37,9 +42,9 @@ const Map: React.FC<MapProps> = ({ onAreaUpdate }) => {
     const isMobile = window.innerWidth <= 768;
     
     // Set different initial coordinates and zoom level based on device type
-    const initialCoordinates = isMobile 
-      ? { center: [-98.5795, 45], zoom: 2.5 }  // Centered on North America, zoomed out
-      : { center: [-98.5795, 39.8283], zoom: 3 };  // Original coordinates
+    const initialCoordinates: MapCoordinates = isMobile 
+      ? { center: [-98.5795, 45] as [number, number], zoom: 2.5 }
+      : { center: [-98.5795, 39.8283] as [number, number], zoom: 3 };
 
     mapboxgl.accessToken = 'pk.eyJ1Ijoiam9zZWF0dyIsImEiOiJjbTdjbHM1cWwwc2ttMm5vbXJqemRlc2V1In0.UlFjTgFW2a4HeEZLe8MG3w';
     
@@ -259,4 +264,3 @@ const Map: React.FC<MapProps> = ({ onAreaUpdate }) => {
 };
 
 export default Map;
-
