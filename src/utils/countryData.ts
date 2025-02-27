@@ -133,6 +133,162 @@ export const countryData: Record<string, CountryData> = {
         total: 195
       }
     ]
+  },
+  DEU: {
+    name: "Germany",
+    description: "A country in Central Europe known for its rich history, technological innovation, and cultural contributions.",
+    history: "From medieval times through reunification in 1990, Germany has been central to European history, arts, and science.",
+    geography: "Features diverse landscapes from the North Sea and Baltic coasts to the Bavarian Alps in the south.",
+    culture: "Known for its contributions to classical music, philosophy, art, and science, as well as its festivals like Oktoberfest.",
+    economy: "Europe's largest economy, known for engineering, automotive industry, and technological innovation.",
+    popularPlaces: [
+      {
+        name: "Brandenburg Gate",
+        description: "An iconic 18th-century neoclassical monument in Berlin.",
+        imageUrl: "https://images.unsplash.com/photo-1467269204594-9661b134dd2b"
+      },
+      {
+        name: "Neuschwanstein Castle",
+        description: "A 19th-century Romanesque Revival palace in Bavaria.",
+        imageUrl: "https://images.unsplash.com/photo-1511282491208-11da5975b739"
+      },
+      {
+        name: "Cologne Cathedral",
+        description: "A UNESCO World Heritage site and masterpiece of Gothic architecture.",
+        imageUrl: "https://images.unsplash.com/photo-1478294226485-0c274d3d2468"
+      },
+      {
+        name: "Black Forest",
+        description: "A mountainous region known for its dense forests and picturesque villages.",
+        imageUrl: "https://images.unsplash.com/photo-1501429106030-84c53d53c8de"
+      },
+      {
+        name: "East Side Gallery",
+        description: "The longest remaining section of the Berlin Wall, covered in artwork.",
+        imageUrl: "https://images.unsplash.com/photo-1477285339322-17881f6d1e8c"
+      },
+      {
+        name: "Rothenburg ob der Tauber",
+        description: "A well-preserved medieval town in Bavaria.",
+        imageUrl: "https://images.unsplash.com/photo-1467269204594-9661b134dd2b"
+      }
+    ],
+    rankings: [
+      {
+        category: "GDP",
+        rank: 4,
+        total: 195
+      },
+      {
+        category: "Innovation",
+        rank: 4,
+        total: 195
+      }
+    ]
+  },
+  JPN: {
+    name: "Japan",
+    description: "An island nation in East Asia known for its unique blend of traditional culture and modern technology.",
+    history: "Rich history spanning ancient imperial dynasties to modern technological leadership.",
+    geography: "An archipelago of 6,852 islands, with four main islands featuring mountains and volcanic regions.",
+    culture: "Renowned for its unique cultural traditions, including tea ceremonies, martial arts, and anime.",
+    economy: "One of the world's largest economies, known for technological innovation and manufacturing.",
+    popularPlaces: [
+      {
+        name: "Mount Fuji",
+        description: "Japan's highest mountain and most iconic natural landmark.",
+        imageUrl: "https://images.unsplash.com/photo-1490806843957-31f4c9a91c65"
+      },
+      {
+        name: "Fushimi Inari Shrine",
+        description: "Famous for its thousands of vermillion torii gates.",
+        imageUrl: "https://images.unsplash.com/photo-1478436127897-769e1538f3f1"
+      },
+      {
+        name: "Tokyo Skytree",
+        description: "The world's tallest tower and a symbol of modern Japan.",
+        imageUrl: "https://images.unsplash.com/photo-1503899036084-c55cdd92da26"
+      },
+      {
+        name: "Arashiyama Bamboo Grove",
+        description: "A stunning bamboo forest in Kyoto.",
+        imageUrl: "https://images.unsplash.com/photo-1463822646420-805d11467e31"
+      },
+      {
+        name: "Senso-ji Temple",
+        description: "Tokyo's oldest Buddhist temple.",
+        imageUrl: "https://images.unsplash.com/photo-1480796927426-f609979314bd"
+      },
+      {
+        name: "Shibuya Crossing",
+        description: "The world's busiest pedestrian crossing.",
+        imageUrl: "https://images.unsplash.com/photo-1503899036084-c55cdd92da26"
+      }
+    ],
+    rankings: [
+      {
+        category: "Technology",
+        rank: 3,
+        total: 195
+      },
+      {
+        category: "Life Expectancy",
+        rank: 2,
+        total: 195
+      }
+    ]
+  },
+  IND: {
+    name: "India",
+    description: "A diverse country in South Asia known for its rich cultural heritage, ancient civilizations, and modern achievements.",
+    history: "One of the world's oldest civilizations with a rich history spanning over 5,000 years.",
+    geography: "Features diverse landscapes from the Himalayas to tropical beaches, and deserts to rainforests.",
+    culture: "Known for its diverse languages, religions, cuisine, arts, and architecture.",
+    economy: "One of the world's fastest-growing major economies, with strengths in IT, pharmaceuticals, and services.",
+    popularPlaces: [
+      {
+        name: "Taj Mahal",
+        description: "An iconic marble mausoleum and UNESCO World Heritage site.",
+        imageUrl: "https://images.unsplash.com/photo-1506462945848-ac8ea6f609cc"
+      },
+      {
+        name: "Jaipur City Palace",
+        description: "A spectacular complex of courtyards, gardens, and buildings.",
+        imageUrl: "https://images.unsplash.com/photo-1477587458883-47145ed94245"
+      },
+      {
+        name: "Varanasi Ghats",
+        description: "Ancient riverside steps along the sacred Ganges River.",
+        imageUrl: "https://images.unsplash.com/photo-1491497895121-3b6c89c7d1f0"
+      },
+      {
+        name: "Kerala Backwaters",
+        description: "A network of lagoons, lakes, and canals parallel to the Arabian Sea coast.",
+        imageUrl: "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944"
+      },
+      {
+        name: "Golden Temple",
+        description: "The holiest shrine of Sikhism in Amritsar.",
+        imageUrl: "https://images.unsplash.com/photo-1514222134-b57cbb8ff907"
+      },
+      {
+        name: "Amber Fort",
+        description: "A majestic fort-palace complex built from red sandstone and marble.",
+        imageUrl: "https://images.unsplash.com/photo-1477587458883-47145ed94245"
+      }
+    ],
+    rankings: [
+      {
+        category: "Population",
+        rank: 2,
+        total: 195
+      },
+      {
+        category: "IT Services",
+        rank: 1,
+        total: 195
+      }
+    ]
   }
-  // ... Additional countries would be added here with their ISO 3166-1 alpha-3 codes
+  // ... Continue with other countries following the same pattern
 };
