@@ -57,4 +57,12 @@
   .mapboxgl-ctrl-group button:focus {
     @apply !ring-2 !ring-primary !ring-offset-2;
   }
+
+  /* Position Mapbox controls below the search bar on mobile */
+  @media (max-width: 768px) {
+    .mapboxgl-control-container .mapboxgl-ctrl-top-right {
+      top: 140px !important;
+    }
+  }
 }
+
