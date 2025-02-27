@@ -15,59 +15,86 @@ export interface CountryData {
 }
 
 export const countryData: Record<string, CountryData> = {
-  AFG: {
-    name: "Afghanistan",
-    description: "A landlocked country at the crossroads of Central and South Asia.",
-    history: "Ancient civilization with a rich history spanning over 50,000 years.",
+  USA: {
+    name: "United States",
+    description: "A diverse country spanning 50 states across North America.",
+    history: "Founded in 1776, the United States has become one of the world's leading nations.",
     popularPlaces: [
       {
-        name: "Band-e Amir National Park",
-        description: "Series of six deep blue lakes separated by natural dams."
+        name: "Grand Canyon",
+        description: "One of the world's most spectacular natural wonders."
       },
       {
-        name: "Bamiyan Valley",
-        description: "Historic site known for its Buddhist monuments and caves."
+        name: "Statue of Liberty",
+        description: "An iconic symbol of freedom and democracy."
       }
     ],
     rankings: [
       {
-        category: "Mineral Resources",
-        rank: 15,
+        category: "GDP",
+        rank: 1,
         total: 195
       },
       {
-        category: "Historical Sites",
-        rank: 25,
+        category: "Innovation",
+        rank: 3,
         total: 195
       }
     ]
   },
-  // ... All other countries follow the same pattern
-  ZWE: {
-    name: "Zimbabwe",
-    description: "A landlocked country in Southern Africa known for its dramatic landscapes and diverse wildlife.",
-    history: "Rich history dating back to the Kingdom of Zimbabwe and Great Zimbabwe ruins.",
+  GBR: {
+    name: "United Kingdom",
+    description: "An island nation with a rich history and global influence.",
+    history: "A historic monarchy that has played a significant role in world history.",
     popularPlaces: [
       {
-        name: "Victoria Falls",
-        description: "One of the world's largest waterfalls, known locally as 'The Smoke that Thunders'."
+        name: "Big Ben",
+        description: "The iconic clock tower in London."
       },
       {
-        name: "Great Zimbabwe",
-        description: "Ancient ruins of an important trading empire."
+        name: "Stonehenge",
+        description: "Ancient prehistoric monument in Wiltshire."
       }
     ],
     rankings: [
       {
-        category: "Natural Resources",
-        rank: 28,
+        category: "Education",
+        rank: 5,
         total: 195
       },
       {
-        category: "Wildlife Diversity",
-        rank: 15,
+        category: "Finance",
+        rank: 4,
+        total: 195
+      }
+    ]
+  },
+  FRA: {
+    name: "France",
+    description: "A country known for its culture, cuisine, and art.",
+    history: "From the French Revolution to modern times, France has been a cultural leader.",
+    popularPlaces: [
+      {
+        name: "Eiffel Tower",
+        description: "The iconic symbol of Paris."
+      },
+      {
+        name: "Palace of Versailles",
+        description: "Historic royal château and gardens."
+      }
+    ],
+    rankings: [
+      {
+        category: "Tourism",
+        rank: 1,
+        total: 195
+      },
+      {
+        category: "Culture",
+        rank: 4,
         total: 195
       }
     ]
   }
+  // ... Additional countries would be added here with their ISO 3166-1 alpha-3 codes
 };
