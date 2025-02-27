@@ -43,14 +43,12 @@ const Map: React.FC = () => {
     map.current.addControl(new mapboxgl.AttributionControl(), 'bottom-left');
     map.current.addControl(new mapboxgl.NavigationControl({ showCompass: false }), 'bottom-right');
 
-    // Add country click handler
+    // Add country click handler with expanded country detection
     map.current.on('click', (e) => {
-      // For demonstration purposes, we'll determine the country based on coordinates
-      // In a real application, you would use proper geocoding
       const lng = e.lngLat.lng;
       const lat = e.lngLat.lat;
       
-      // Simple coordinate-based country detection (this is just for demonstration)
+      // Extended coordinate-based country detection
       if (lng > -125 && lng < -66 && lat > 25 && lat < 49) {
         navigate('/country/USA');
       } else if (lng > -10 && lng < 2 && lat > 50 && lat < 59) {
@@ -59,6 +57,16 @@ const Map: React.FC = () => {
         navigate('/country/FRA');
       } else if (lng > 5 && lng < 15 && lat > 47 && lat < 55) {
         navigate('/country/GER');
+      } else if (lng > -10 && lng < 3 && lat > 36 && lat < 44) {
+        navigate('/country/ESP');
+      } else if (lng > 7 && lng < 18 && lat > 37 && lat < 47) {
+        navigate('/country/ITA');
+      } else if (lng > 20 && lng < 180 && lat > 41 && lat < 77) {
+        navigate('/country/RUS');
+      } else if (lng > 73 && lng < 135 && lat > 18 && lat < 54) {
+        navigate('/country/CHN');
+      } else if (lng > 129 && lng < 146 && lat > 31 && lat < 46) {
+        navigate('/country/JPN');
       }
     });
 

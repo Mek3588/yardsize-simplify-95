@@ -18,7 +18,6 @@ interface CountryData {
   }>;
 }
 
-// This would typically come from an API, but for now we'll use dummy data
 const countryData: Record<string, CountryData> = {
   USA: {
     name: "United States of America",
@@ -124,6 +123,141 @@ const countryData: Record<string, CountryData> = {
       {
         category: "Manufacturing",
         rank: 3,
+        total: 195
+      }
+    ]
+  },
+  ESP: {
+    name: "Spain",
+    description: "Spain is a country on Europe's Iberian Peninsula known for its rich culture, diverse landscapes, and historical significance.",
+    history: "From ancient Roman times through the Golden Age of exploration and to modern day, Spain has been a crucial player in world history.",
+    popularPlaces: [
+      {
+        name: "Sagrada Familia",
+        description: "Antoni Gaudí's unfinished masterpiece in Barcelona, a stunning example of modernist architecture."
+      },
+      {
+        name: "Alhambra",
+        description: "A palace and fortress complex in Granada, showcasing stunning Islamic architecture."
+      }
+    ],
+    rankings: [
+      {
+        category: "Tourism",
+        rank: 2,
+        total: 195
+      },
+      {
+        category: "Life Expectancy",
+        rank: 4,
+        total: 195
+      }
+    ]
+  },
+  ITA: {
+    name: "Italy",
+    description: "Italy is a Southern European country known for its art, architecture, food, and cultural heritage.",
+    history: "The birthplace of the Roman Empire and the Renaissance, Italy has profoundly influenced Western civilization.",
+    popularPlaces: [
+      {
+        name: "Colosseum",
+        description: "Ancient amphitheater in Rome, symbol of the Roman Empire."
+      },
+      {
+        name: "Venice Canals",
+        description: "Historic waterways that serve as the city's main transportation arteries."
+      }
+    ],
+    rankings: [
+      {
+        category: "Cultural Heritage Sites",
+        rank: 1,
+        total: 195
+      },
+      {
+        category: "Cuisine",
+        rank: 1,
+        total: 195
+      }
+    ]
+  },
+  RUS: {
+    name: "Russia",
+    description: "Russia is the world's largest country, spanning Eastern Europe and Northern Asia.",
+    history: "From the times of Imperial Russia through the Soviet era to the present day, Russia has been a major world power.",
+    popularPlaces: [
+      {
+        name: "Red Square",
+        description: "Moscow's central square, home to the Kremlin and St. Basil's Cathedral."
+      },
+      {
+        name: "Hermitage Museum",
+        description: "One of the world's largest art museums, located in St. Petersburg."
+      }
+    ],
+    rankings: [
+      {
+        category: "Natural Resources",
+        rank: 1,
+        total: 195
+      },
+      {
+        category: "Territory Size",
+        rank: 1,
+        total: 195
+      }
+    ]
+  },
+  CHN: {
+    name: "China",
+    description: "China is the world's most populous country with a history spanning thousands of years.",
+    history: "One of the world's oldest civilizations, China has been a leader in arts, sciences, and technology throughout history.",
+    popularPlaces: [
+      {
+        name: "Great Wall",
+        description: "Ancient defensive wall spanning thousands of miles across northern China."
+      },
+      {
+        name: "Forbidden City",
+        description: "Imperial palace complex in Beijing, home to Chinese emperors for 500 years."
+      }
+    ],
+    rankings: [
+      {
+        category: "Population",
+        rank: 1,
+        total: 195
+      },
+      {
+        category: "Economy Size",
+        rank: 2,
+        total: 195
+      }
+    ]
+  },
+  JPN: {
+    name: "Japan",
+    description: "Japan is an island nation in East Asia known for blending ancient traditions with cutting-edge technology.",
+    history: "From feudal shogunates to modern economic power, Japan has maintained its unique cultural identity while embracing innovation.",
+    popularPlaces: [
+      {
+        name: "Mount Fuji",
+        description: "Japan's highest mountain and an iconic symbol of the country."
+      },
+      {
+        name: "Fushimi Inari Shrine",
+        description: "Famous shrine in Kyoto known for its thousands of torii gates."
+      }
+    ],
+    rankings: [
+      {
+        category: "Technology",
+        rank: 3,
+        total: 195
+      },
+      {
+        category: "Life Expectancy",
+        rank: 2,
         total: 195
       }
     ]
