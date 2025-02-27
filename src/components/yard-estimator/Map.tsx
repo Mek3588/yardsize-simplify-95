@@ -149,8 +149,11 @@ const Map: React.FC<MapProps> = ({ onAreaUpdate }) => {
     customContainer.className = 'custom-draw-controls fixed top-16 right-2 md:right-4 z-[999]';
     document.body.appendChild(customContainer);
 
-    // Add the draw control to our custom container
-    map.current.addControl(draw.current, customContainer);
+    // Add the draw control using 'top-right' position string instead of DOM element
+    if (map.current) {
+      map.current.addControl(draw.current, 'top-right');
+    }
+
     map.current.addControl(new mapboxgl.NavigationControl({ showCompass: false }), 'bottom-right');
 
     // Add custom styles for the draw controls
